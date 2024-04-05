@@ -1,5 +1,6 @@
 package com.majortomdev.reactBootBackend.controller;
 
+import com.majortomdev.reactBootBackend.exception.UserNotFoundException;
 import com.majortomdev.reactBootBackend.model.User;
 import com.majortomdev.reactBootBackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,12 @@ public class UserController {
     List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @GetMapping("/user/{id}")
+    User getUserById(@PathVariable Long id){
+        return userRepository.findById(id)
+                .orElseThrow(()->new UserNotFoundException(id));
+    }
+
 
 }
